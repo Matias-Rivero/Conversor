@@ -9,39 +9,36 @@ package conversor;
  *
  * @author Gabriel
  */
-public class CentimetrosPulgadasConversor extends Conversor {
+public class KilojouleJulioConversor extends Conversor {
 
-    private static final double UNA_PULGADA = 2.54;
+    private static final Double UN_KL = 1000.0;
 
     @Override
     public String getLabelValor1() {
         
-        return "Centímetros";
+        return "Kilojoule";
     }
     
     @Override
     public String getLabelValor2() {
         
-        return "Pulgadas";
-    }
-    
-    @Override
-    public String toString() {
-        return "Centimetros a Pulgadas";
+        return "Julio";
     }
 
     @Override
-    public Double convertirValor1Valor2(Double valor1) {      
-        return valor1 / UNA_PULGADA;
+    public String toString() {
+        return "Kilojoule a Julio";
+    }
+
+    @Override
+    public Double convertirValor1Valor2(Double valor1) {
+        return valor1 * UN_KL;
     }
 
     @Override
     public Double convertirValor2Valor1(Double valor2) {
-        return valor2 * UNA_PULGADA;
+        return valor2 / UN_KL;
     }
-
-
-    
     
     
 }

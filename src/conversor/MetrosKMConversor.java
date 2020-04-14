@@ -18,6 +18,12 @@ public class MetrosKMConversor extends Conversor {
         
         return "Metros";
     }
+    
+    @Override
+    public String getLabelValor2() {
+        
+        return "Kilometros";
+    }
 
     @Override
     public String toString() {
@@ -25,10 +31,14 @@ public class MetrosKMConversor extends Conversor {
     }
 
     @Override
-    public Double convertirValor1Valor2(Double metros) {
-        return metros / UN_KM;
+    public Double convertirValor1Valor2(Double valor1) {
+        return valor1 / UN_KM;
     }
-    
+
+    @Override
+    public Double convertirValor2Valor1(Double valor2) {
+        return valor2 * UN_KM;
+    }
     
     
 }

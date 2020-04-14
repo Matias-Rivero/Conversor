@@ -9,39 +9,36 @@ package conversor;
  *
  * @author Gabriel
  */
-public class CentimetrosPulgadasConversor extends Conversor {
+public class MiligramosGramosConversor extends Conversor {
 
-    private static final double UNA_PULGADA = 2.54;
+    private static final Double UN_ML = 1000.0;
 
     @Override
     public String getLabelValor1() {
         
-        return "Centímetros";
+        return "Miligramos";
     }
     
     @Override
     public String getLabelValor2() {
         
-        return "Pulgadas";
-    }
-    
-    @Override
-    public String toString() {
-        return "Centimetros a Pulgadas";
+        return "Gramos";
     }
 
     @Override
-    public Double convertirValor1Valor2(Double valor1) {      
-        return valor1 / UNA_PULGADA;
+    public String toString() {
+        return "Miligramos a Gramos";
+    }
+
+    @Override
+    public Double convertirValor1Valor2(Double valor1) {
+        return valor1 / UN_ML;
     }
 
     @Override
     public Double convertirValor2Valor1(Double valor2) {
-        return valor2 * UNA_PULGADA;
+        return valor2 * UN_ML;
     }
-
-
-    
     
     
 }

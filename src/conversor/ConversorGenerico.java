@@ -5,6 +5,7 @@
  */
 package conversor;
 
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class ConversorGenerico extends javax.swing.JFrame {
         conversores = new ArrayList<Conversor>();
         conversores.add(new CentimetrosPulgadasConversor());
         conversores.add(new MetrosKMConversor());
+        conversores.add(new MiligramosGramosConversor());
+        conversores.add(new SegundosMinutosConversor());
+        conversores.add(new KilojouleJulioConversor());
         
         for (Conversor conversor : conversores) {
             jComboBoxConversores.addItem(conversor.toString());    
@@ -38,9 +42,8 @@ public class ConversorGenerico extends javax.swing.JFrame {
         
         // Valor por Defecto
         selectedConversor = conversores.get(0);
-        jLabel1.setText(selectedConversor.getLabelValor1());
-        
-        jLabel2.setText("");
+        jLabel1.setText(selectedConversor.getLabelValor1());      
+        jLabel2.setText(selectedConversor.getLabelValor2());
     }
 
     /**
@@ -52,23 +55,23 @@ public class ConversorGenerico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextFieldCent = new javax.swing.JTextField();
+        jTextFieldValor1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButtonConvertir = new javax.swing.JButton();
-        jTextFieldPulg = new javax.swing.JTextField();
+        jTextFieldValor2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxConversores = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextFieldCent.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldValor1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldCentFocusLost(evt);
+                jTextFieldValor1FocusLost(evt);
             }
         });
-        jTextFieldCent.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextFieldValor1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldCentKeyPressed(evt);
+                jTextFieldValor1KeyPressed(evt);
             }
         });
 
@@ -80,10 +83,20 @@ public class ConversorGenerico extends javax.swing.JFrame {
                 jButtonConvertirActionPerformed(evt);
             }
         });
+        jButtonConvertir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButtonConvertirKeyPressed(evt);
+            }
+        });
 
-        jTextFieldPulg.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldValor2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldPulgFocusLost(evt);
+                jTextFieldValor2FocusLost(evt);
+            }
+        });
+        jTextFieldValor2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldValor2KeyPressed(evt);
             }
         });
 
@@ -109,8 +122,8 @@ public class ConversorGenerico extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2)
-                                .addComponent(jTextFieldPulg, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldCent, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldValor2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldValor1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(202, 202, 202)))
                     .addComponent(jComboBoxConversores, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,68 +137,117 @@ public class ConversorGenerico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldCent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldValor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addComponent(jButtonConvertir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldPulg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldValor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConvertirActionPerformed
         // System.out.println("Centímetros ingresados = "+ jTextFieldCent.getText()); 
         // Convertir
         
-        if (conviertoAPulg) {
-            convertirAPulgadas();
+        if (conviertoAOtraU) {  //True focus en valor1 // False focus en valor2
+            convertirAOtraUnidad(conviertoAOtraU);
         }
         else {
-            // Convertir a centímetros
+            convertirAOtraUnidad(conviertoAOtraU);
         }
         
 
     }//GEN-LAST:event_jButtonConvertirActionPerformed
 
-    private void convertirAPulgadas() throws HeadlessException {
-        Double cent;
+    private void convertirAOtraUnidad(boolean conviertoAOtraU) throws HeadlessException {
+    
+    if (jTextFieldValor1.getText().isEmpty() && jTextFieldValor2.getText().isEmpty()) {  
+        JOptionPane.showMessageDialog(this, "Complete los campos", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            jTextFieldValor1.setBackground(Color.orange);
+            jTextFieldValor2.setBackground(Color.orange);
+            return;
+    }
+    
+    if (conviertoAOtraU) {
+
+        Double valor1;
         try {
-            cent = Double.valueOf(jTextFieldCent.getText().replace(',', '.'));
+            valor1 = Double.valueOf(jTextFieldValor1.getText().replace(',', '.'));
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Formato no válido", "Error",
                     JOptionPane.ERROR_MESSAGE);
+            jTextFieldValor1.setBackground(Color.orange);
             return;
         }
-        
-        Double valor2 = selectedConversor.convertirValor1Valor2(cent);
+ 
+        jTextFieldValor1.setBackground(Color.white);
+        jTextFieldValor2.setBackground(Color.white);
+        Double valor2 = selectedConversor.convertirValor1Valor2(valor1);
         //System.out.println(pulg);
-        jTextFieldPulg.setText(String.format("%.2f", valor2));
+        jTextFieldValor2.setText(String.format("%.2f", valor2));
+        }
+        else {
+                  
+                Double valor2;
+                try {
+                    valor2 = Double.valueOf(jTextFieldValor2.getText().replace(',', '.'));
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Formato no válido", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    jTextFieldValor2.setBackground(Color.orange);
+                    return;
+                }
+                
+                jTextFieldValor1.setBackground(Color.white);    
+                jTextFieldValor2.setBackground(Color.white);
+                Double valor1 = selectedConversor.convertirValor2Valor1(valor2);
+                //System.out.println(pulg);
+                jTextFieldValor1.setText(String.format("%.2f", valor1));
+             }
+       
     }
 
-    private void jTextFieldCentFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCentFocusLost
-        conviertoAPulg = true;
-    }//GEN-LAST:event_jTextFieldCentFocusLost
+    private void jTextFieldValor1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldValor1FocusLost
+        conviertoAOtraU = true;
+    }//GEN-LAST:event_jTextFieldValor1FocusLost
 
-    private void jTextFieldPulgFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPulgFocusLost
-        conviertoAPulg = false;
-    }//GEN-LAST:event_jTextFieldPulgFocusLost
+    private void jTextFieldValor2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldValor2FocusLost
+        conviertoAOtraU = false;
+    }//GEN-LAST:event_jTextFieldValor2FocusLost
 
-    private void jTextFieldCentKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCentKeyPressed
+    private void jTextFieldValor1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldValor1KeyPressed
         // Se presiono CRLF?
         if (evt.getKeyChar()==KeyEvent.VK_ENTER) {
-            convertirAPulgadas();
+            conviertoAOtraU = true;
+            convertirAOtraUnidad(conviertoAOtraU);
         }
-    }//GEN-LAST:event_jTextFieldCentKeyPressed
+    }//GEN-LAST:event_jTextFieldValor1KeyPressed
 
     private void jComboBoxConversoresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxConversoresItemStateChanged
         int selectedIndex = jComboBoxConversores.getSelectedIndex();
         jLabel1.setText(conversores.get(selectedIndex).getLabelValor1());
+        jLabel2.setText(conversores.get(selectedIndex).getLabelValor2());
         selectedConversor = conversores.get(selectedIndex);
     }//GEN-LAST:event_jComboBoxConversoresItemStateChanged
+
+    private void jTextFieldValor2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldValor2KeyPressed
+        // Se presiono CRLF?
+        if (evt.getKeyChar()==KeyEvent.VK_ENTER) {
+            conviertoAOtraU = false;
+            convertirAOtraUnidad(conviertoAOtraU);
+        }
+    }//GEN-LAST:event_jTextFieldValor2KeyPressed
+
+    private void jButtonConvertirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonConvertirKeyPressed
+
+    }//GEN-LAST:event_jButtonConvertirKeyPressed
 
     /**
      * @param args the command line arguments
@@ -223,14 +285,14 @@ public class ConversorGenerico extends javax.swing.JFrame {
         });
     }
 
-    private boolean conviertoAPulg;
+    private boolean conviertoAOtraU;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConvertir;
     private javax.swing.JComboBox<String> jComboBoxConversores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextFieldCent;
-    private javax.swing.JTextField jTextFieldPulg;
+    private javax.swing.JTextField jTextFieldValor1;
+    private javax.swing.JTextField jTextFieldValor2;
     // End of variables declaration//GEN-END:variables
 }
