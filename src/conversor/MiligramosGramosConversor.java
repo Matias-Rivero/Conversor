@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package conversor;
 
-/**
- *
- * @author Gabriel
- */
 public class MiligramosGramosConversor extends Conversor {
 
     private static final Double UN_ML = 1000.0;
@@ -27,7 +18,7 @@ public class MiligramosGramosConversor extends Conversor {
 
     @Override
     public String toString() {
-        return "Miligramos a Gramos";
+        return "Miligramos - Gramos";
     }
 
     @Override

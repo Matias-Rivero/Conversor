@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package conversor;
 
-/**
- *
- * @author Gabriel
- */
 public class SegundosMinutosConversor extends Conversor {
 
     private static final Double UN_MI = 60.0;
@@ -27,7 +18,7 @@ public class SegundosMinutosConversor extends Conversor {
 
     @Override
     public String toString() {
-        return "Segundos a Minutos";
+        return "Segundos - Minutos";
     }
 
     @Override

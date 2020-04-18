@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package conversor;
 
-/**
- *
- * @author Gabriel
- */
 public class CentimetrosPulgadasConversor extends Conversor {
 
     private static final double UNA_PULGADA = 2.54;
@@ -27,7 +18,7 @@ public class CentimetrosPulgadasConversor extends Conversor {
     
     @Override
     public String toString() {
-        return "Centimetros a Pulgadas";
+        return "Centimetros - Pulgadas";
     }
 
     @Override
